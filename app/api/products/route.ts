@@ -71,6 +71,8 @@ export async function GET(request: Request) {
   const endIndex = startIndex + amountPerPage;
   const paginatedProducts = sortedProducts.slice(startIndex, endIndex);
 
+  const totalPages = Math.ceil(filteredProducts.length / amountPerPage);
+
   // Prepare response
   const response = {
     query,
@@ -80,6 +82,7 @@ export async function GET(request: Request) {
     filterBy,
     totalResults: filteredProducts.length,
     totalAmountProducts: products.length,
+    pages: totalPages,
     items: paginatedProducts,
   };
 
