@@ -12,7 +12,8 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
         "bovag-red": "#e2001a",
-        "bovag-yellow": "#ffd500"
+        "bovag-yellow": "#ffd500",
+        "brand-gray": "#f5f5f5"
       },
     },
   },

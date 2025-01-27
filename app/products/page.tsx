@@ -1,14 +1,30 @@
 import React from 'react';
 import ProductList from '../components/ProductList';
 import Link from 'next/link';
+import FilterSidebar from '../components/FilterSidebar';
 
 export default async function Page({ searchParams }) {
-  const { page: pageParam} = await searchParams;
+  const { page: pageParam, ...filterParams } = searchParams;
   const page = parseInt(pageParam) || 1;
-  const res = await fetch(`http://localhost:3000/api/products?page=${page}&amountPerPage=10`, {
+  
+  const queryParams = new URLSearchParams();
+  queryParams.set('page', page.toString());
+  queryParams.set('amountPerPage', '10');
+  
+  // Safely add filter params
+  Object.entries(filterParams).forEach(([key, value]) => {
+    if (value !== undefined && value !== null) {
+      queryParams.set(key, value.toString());
+    }
+  });
+
+  const res = await fetch(`http://localhost:3000/api/products?${queryParams}`, {
     cache: 'no-store',
   });
   const data = await res.json();
+
+  const facetsRes = await fetch('http://localhost:3000/api/facets', { cache: 'no-store' });
+  const facets = await facetsRes.json();
 
   const { items, page: currentPage, totalResults, amountPerPage, pages } = data;
   const totalPages = Math.ceil(totalResults / amountPerPage);
@@ -33,10 +49,9 @@ export default async function Page({ searchParams }) {
   return (
     <div className="flex">
       <aside className="w-1/4 p-4 hidden md:block">
-        {/* Placeholder for filters */}
-        <div className="border p-4 rounded">Filter sidebar</div>
+        <FilterSidebar facets={facets} />
       </aside>
-      <main className="flex-1 p-4">
+      <main className="flex-1 p-4 bg-brand-gray min-h-screen">
         <ProductList products={items} />
         <div className="mt-4 flex gap-2 items-center">
           {pageNumbers.map((p, idx) =>

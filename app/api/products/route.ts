@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
-import products from './products.json'; // Import the dataset
+import { NextRequest, NextResponse } from 'next/server';
+import products from './products.json';
 
 // Helper function to simulate Elasticsearch-like free text search
 function searchProducts(query: string, items: any[]) {
@@ -13,7 +13,6 @@ function searchProducts(query: string, items: any[]) {
   );
 }
 
-// Helper function to apply filters
 function filterProducts(items: any[], filters: { facet: string; operator: string; value: any }[]) {
   return items.filter((item) =>
     filters.every((filter) => {
@@ -34,7 +33,6 @@ function filterProducts(items: any[], filters: { facet: string; operator: string
   );
 }
 
-// Helper function to sort products
 function sortProducts(items: any[], sortRules: { facet: string; asc: boolean }[]) {
   return items.sort((a, b) => {
     for (const rule of sortRules) {
@@ -47,44 +45,46 @@ function sortProducts(items: any[], sortRules: { facet: string; asc: boolean }[]
   });
 }
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
+export async function GET(request: NextRequest) {
+  const { searchParams } = request.nextUrl;
+  const page = parseInt(searchParams.get('page') || '1');
+  const amountPerPage = parseInt(searchParams.get('amountPerPage') || '10');
 
-  // Parse query parameters
-  const query = searchParams.get('query') || '';
-  const page = parseInt(searchParams.get('page') || '1', 10);
-  const amountPerPage = parseInt(searchParams.get('amountPerPage') || '10', 10);
-  const orderBy = JSON.parse(searchParams.get('orderBy') || '[]');
-  const filterBy = JSON.parse(searchParams.get('filterBy') || '[]');
+  // Apply filters
+  let filteredProducts = [...products];
+  
+  // Number range filters
+  const numberFilters = ['year', 'price', 'mileage'];
+  numberFilters.forEach(filter => {
+    const fromValue = searchParams.get(`${filter}From`);
+    const toValue = searchParams.get(`${filter}To`);
+    
+    if (fromValue) {
+      filteredProducts = filteredProducts.filter(p => p[filter] >= parseInt(fromValue));
+    }
+    if (toValue) {
+      filteredProducts = filteredProducts.filter(p => p[filter] <= parseInt(toValue));
+    }
+  });
 
-  // Step 1: Apply free text search
-  let filteredProducts = searchProducts(query, products);
+  // Exact match filters
+  const exactFilters = ['make', 'model', 'color', 'type', 'fuel', 'transmission', 'condition', 'location'];
+  exactFilters.forEach(filter => {
+    const value = searchParams.get(filter);
+    if (value) {
+      filteredProducts = filteredProducts.filter(p => p[filter] === value);
+    }
+  });
 
-  // Step 2: Apply filters
-  filteredProducts = filterProducts(filteredProducts, filterBy);
+  const start = (page - 1) * amountPerPage;
+  const end = start + amountPerPage;
+  const paginatedProducts = filteredProducts.slice(start, end);
 
-  // Step 3: Sort products
-  const sortedProducts = sortProducts(filteredProducts, orderBy);
-
-  // Step 4: Paginate results
-  const startIndex = (page - 1) * amountPerPage;
-  const endIndex = startIndex + amountPerPage;
-  const paginatedProducts = sortedProducts.slice(startIndex, endIndex);
-
-  const totalPages = Math.ceil(filteredProducts.length / amountPerPage);
-
-  // Prepare response
-  const response = {
-    query,
+  return NextResponse.json({
+    items: paginatedProducts,
     page,
     amountPerPage,
-    orderBy,
-    filterBy,
     totalResults: filteredProducts.length,
-    totalAmountProducts: products.length,
-    pages: totalPages,
-    items: paginatedProducts,
-  };
-
-  return NextResponse.json(response);
+    pages: Math.ceil(filteredProducts.length / amountPerPage)
+  });
 }
