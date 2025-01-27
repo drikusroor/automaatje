@@ -1,4 +1,5 @@
 
+import Image from 'next/image';
 import React from 'react';
 
 interface Product {
@@ -19,6 +20,13 @@ interface Product {
 export default function ProductListTile({ product }: { product: Product }) {
   return (
     <div className="border border-gray-300 p-2 rounded shadow-sm">
+      <Image
+        src={`/images/car-placeholder.png`}
+        width={300}
+        height={200}
+        alt={product.make}
+        className='invert'
+      />
       <h3 className="font-bold">{product.make} {product.model}</h3>
       <p>{product.year} - {product.mileage} km</p>
       <p className="text-red-500 font-semibold">€ {product.price}</p>
