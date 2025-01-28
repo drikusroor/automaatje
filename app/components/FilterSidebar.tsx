@@ -41,26 +41,40 @@ export default function FilterSidebar({ facets }: { facets: any[] }) {
             {isRange ? (
               <div className="flex gap-2">
                 <div className="flex-1">
-                  <input 
-                    type="number"
-                    min={facet.options[0]}
-                    max={facet.options[facet.options.length - 1]}
-                    placeholder="Van"
-                    defaultValue={searchParams.get(facet.key) || ''}
+                  <select
                     className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400"
+                    defaultValue={searchParams.get(facet.key) || ''}
                     onChange={(e) => handleFilterChange(facet.key, e.target.value)}
-                  />
+                  >
+                    <option value="">(Vanaf)</option>
+                    {facet.options
+                      .filter((opt: number) => {
+                        const toValue = searchParams.get(toField?.key || '');
+                        return !toValue || opt <= Number(toValue);
+                      })
+                      .map((opt: string | number) => (
+                        <option key={opt} value={opt}>{opt}</option>
+                      ))
+                    }
+                  </select>
                 </div>
                 <div className="flex-1">
-                  <input 
-                    type="number"
-                    min={toField?.options[0]}
-                    max={toField?.options[toField.options.length - 1]}
-                    placeholder="Tot"
-                    defaultValue={searchParams.get(toField?.key || '') || ''}
+                  <select
                     className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400"
+                    defaultValue={searchParams.get(toField?.key || '') || ''}
                     onChange={(e) => handleFilterChange(toField?.key || '', e.target.value)}
-                  />
+                  >
+                    <option value="">(Tot)</option>
+                    {toField?.options
+                      .filter((opt: number) => {
+                        const fromValue = searchParams.get(facet.key);
+                        return !fromValue || opt >= Number(fromValue);
+                      })
+                      .map((opt: string | number) => (
+                        <option key={opt} value={opt}>{opt}</option>
+                      ))
+                    }
+                  </select>
                 </div>
               </div>
             ) : (
