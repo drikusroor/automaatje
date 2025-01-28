@@ -4,12 +4,17 @@ import Link from 'next/link';
 import FilterSidebar from '../components/FilterSidebar';
 
 export default async function Page({ searchParams }) {
-  const { page: pageParam, ...filterParams } = await searchParams;
+  const { page: pageParam, q, ...filterParams } = await searchParams;
   const page = parseInt(pageParam) || 1;
   
   const queryParams = new URLSearchParams();
   queryParams.set('page', page.toString());
   queryParams.set('amountPerPage', '10');
+  
+  // Add search query if present
+  if (q) {
+    queryParams.set('q', q);
+  }
   
   // Safely add filter params
   Object.entries(filterParams).forEach(([key, value]) => {
