@@ -1,24 +1,54 @@
 "use client";
 
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function FilterSidebar({ facets }: { facets: any[] }) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const searchTimeout = useRef<NodeJS.Timeout>();
 
-  const handleFilterChange = (key: string, value: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    if (value) {
-      params.set(key, value);
+  const handleFilterChange = (key: string, value: string, shouldDebounce = false) => {
+    if (shouldDebounce) {
+      if (searchTimeout.current) {
+        clearTimeout(searchTimeout.current);
+      }
+      
+      searchTimeout.current = setTimeout(() => {
+        const params = new URLSearchParams(searchParams.toString());
+        if (value) {
+          params.set(key, value);
+        } else {
+          params.delete(key);
+        }
+        router.push(`/products?${params.toString()}`);
+      }, 300);
     } else {
-      params.delete(key);
+      const params = new URLSearchParams(searchParams.toString());
+      if (value) {
+        params.set(key, value);
+      } else {
+        params.delete(key);
+      }
+      router.push(`/products?${params.toString()}`);
     }
-    router.push(`/products?${params.toString()}`);
   };
 
   return (
     <div className="bg-white border border-gray-200 p-4 rounded shadow-sm">
+      <div className="mb-4">
+        <label className="block font-semibold text-gray-700 mb-1">
+          Zoeken
+        </label>
+        <input
+          type="text"
+          placeholder="Zoek..."
+          className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400"
+          defaultValue={searchParams.get('query') || ''}
+          onChange={(e) => handleFilterChange('query', e.target.value, true)}
+        />
+      </div>
+
       {facets.map((facet) => {
         // Check if this is part of a range (ends with From or To)
         const isRange = facet.key.endsWith('From') || facet.key.endsWith('To');
