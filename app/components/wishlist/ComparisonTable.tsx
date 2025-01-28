@@ -1,4 +1,5 @@
 import { formatCurrency } from '@/app/utils/formatters';
+import Image from 'next/image';
 import Link from 'next/link';
 
 const ComparisonTable = ({ vehicles }) => {
@@ -18,12 +19,12 @@ const ComparisonTable = ({ vehicles }) => {
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full bg-white shadow-lg rounded-lg">
+      <table className="table-auto w-full bg-white shadow-lg rounded-lg">
         <thead>
           <tr>
-            <th className="p-3 border-b">Kenmerken</th>
+            <th className="text-left p-3 border-b w-32">Kenmerken</th>
             {vehicles.map((vehicle) => (
-              <th key={vehicle.id} className="p-3 border-b">
+              <th key={vehicle.id} className="text-right p-3 border-b w-80">
                 <Link href={`/products/${vehicle.id}`} className="text-bovag-red hover:underline">
                   {vehicle.make} {vehicle.model}
                 </Link>
@@ -32,11 +33,25 @@ const ComparisonTable = ({ vehicles }) => {
           </tr>
         </thead>
         <tbody>
+          <tr>
+            <td></td>
+            {vehicles.map((vehicle) => (
+              <td key={vehicle.id} className="text-right p-3 border-b">
+                <Image
+                  src={`/images/car-placeholder.jpg`}
+                  width={120}
+                  height={120}
+                  alt={vehicle.make}
+                  className='rounded-md ml-auto'
+                />
+              </td>
+            ))}
+          </tr>
           {facets.map((facet) => (
             <tr key={facet.key} className="hover:bg-gray-50">
               <td className="p-3 border-b font-medium">{facet.label}</td>
               {vehicles.map((vehicle) => (
-                <td key={`${vehicle.id}-${facet.key}`} className="p-3 border-b text-center">
+                <td key={`${vehicle.id}-${facet.key}`} className="text-right p-3 border-b">
                   {facet.format ? facet.format(vehicle[facet.key]) : vehicle[facet.key]}
                 </td>
               ))}
