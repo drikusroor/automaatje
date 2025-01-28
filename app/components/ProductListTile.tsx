@@ -20,7 +20,7 @@ interface Product {
 export default function ProductListTile({ product }: { product: Product }) {
   return (
     <div className="bg-white border border-gray-200 p-4 rounded shadow-sm hover:shadow-md transition-shadow relative">
-      <WishlistButton productId={product.id} />
+      <WishlistButton productId={product.id} absolute />
       <Image
         src={`/images/car-placeholder.jpg`}
         width={640}
