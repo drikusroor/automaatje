@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 import WishlistButton from './wishlist/WishlistButton';
+import Link from 'next/link';
 
 interface Product {
   id: number;
@@ -28,7 +29,11 @@ export default function ProductListTile({ product }: { product: Product }) {
         alt={product.make}
         className='rounded-md'
       />
-      <h3 className="font-heading font-bold text-gray-900 mt-3">{product.make} {product.model}</h3>
+      <Link href={`/products/${product.id}`}>
+        <h3 className="font-heading font-bold text-gray-900 mt-3 hover:underline">
+          {product.make} {product.model}
+        </h3>
+      </Link>
       <p className="text-gray-600">{product.year} - {product.mileage} km</p>
       <p className="text-gray-900 font-semibold">€ {product.price}</p>
     </div>
