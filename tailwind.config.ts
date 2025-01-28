@@ -8,6 +8,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        heading: ['var(--font-fugaz-one)', 'serif'],
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",

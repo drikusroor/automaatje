@@ -28,7 +28,7 @@ export default function ProductListTile({ product }: { product: Product }) {
         alt={product.make}
         className='rounded-md'
       />
-      <h3 className="font-bold text-gray-900 mt-3">{product.make} {product.model}</h3>
+      <h3 className="font-heading font-bold text-gray-900 mt-3">{product.make} {product.model}</h3>
       <p className="text-gray-600">{product.year} - {product.mileage} km</p>
       <p className="text-gray-900 font-semibold">€ {product.price}</p>
     </div>

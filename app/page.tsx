@@ -13,7 +13,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-brand-gray p-4">
-      <h1 className="text-5xl font-bold mb-8 text-center">Vind je maatje</h1>
+      <h1 className="text-5xl font-heading mb-8 text-center">Vind je maatje</h1>
       <form onSubmit={handleSubmit} className="w-full max-w-2xl">
         <div className="flex gap-2">
           <input
