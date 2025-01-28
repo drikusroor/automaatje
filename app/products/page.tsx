@@ -4,7 +4,7 @@ import Link from 'next/link';
 import FilterSidebar from '../components/FilterSidebar';
 
 export default async function Page({ searchParams }) {
-  const { page: pageParam, ...filterParams } = searchParams;
+  const { page: pageParam, ...filterParams } = await searchParams;
   const page = parseInt(pageParam) || 1;
   
   const queryParams = new URLSearchParams();

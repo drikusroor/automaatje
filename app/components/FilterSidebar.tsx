@@ -44,8 +44,8 @@ export default function FilterSidebar({ facets }: { facets: any[] }) {
           type="text"
           placeholder="Zoek..."
           className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400"
-          defaultValue={searchParams.get('query') || ''}
-          onChange={(e) => handleFilterChange('query', e.target.value, true)}
+          defaultValue={searchParams.get('q') || ''}
+          onChange={(e) => handleFilterChange('q', e.target.value, true)}
         />
       </div>
 

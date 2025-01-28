@@ -49,9 +49,10 @@ export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const page = parseInt(searchParams.get('page') || '1');
   const amountPerPage = parseInt(searchParams.get('amountPerPage') || '10');
+  const searchQuery = searchParams.get('q') || '';
 
-  // Apply filters
-  let filteredProducts = [...products];
+  // Apply search first
+  let filteredProducts = searchProducts(searchQuery, [...products]);
   
   // Number range filters
   const numberFilters = ['year', 'price', 'mileage'];
