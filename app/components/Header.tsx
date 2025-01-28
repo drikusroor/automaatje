@@ -6,7 +6,8 @@ export default function Header() {
     <header className="bg-bovag-yellow text-bovag-red p-4 shadow-md">
       <nav className="flex justify-between items-end">
         <Link href="/" className="bg-white px-2 py-1 rounded-3xl font-bold text-xl border-2 border-bovag-red">
-          Automaatje 🫰
+          Automaatje 
+          <span className="drop-shadow">🫰</span>
         </Link>
         <WishlistCounter />
       </nav>
