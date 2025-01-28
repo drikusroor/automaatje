@@ -16,7 +16,7 @@ export default function WishlistCounter() {
     <Link 
     href="/wishlist" 
     className="flex items-center gap-1 bg-white px-2 py-1 rounded-3xl font-bold border border-bovag-red"
-    title={`Wenslijst (${items.length} voertuigen)`}
+    title={`Verlanglijst (${items.length} voertuigen)`}
     >
       <FaHeart className=" text-bovag-red w-5 h-5" />
       <span className="font-bold">{items.length}</span>
