@@ -5,7 +5,7 @@ Is a Next.js-based prototype developed as a technical assessment for a 2nd inter
 ## Key Features
 
 - Fetching product data from a custom JSON file or API.
-- Free-text search, filtering, and sorting on the product listing.
+- Free-text search and filtering on the product listing page.
 - Wishlist mechanism persisted across browsing sessions.
 - Header with a favorites icon, including a badge displaying wishlist item count.
 - Separate page to view and manage wishlist items.
