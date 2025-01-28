@@ -52,11 +52,11 @@ export default async function Page({ searchParams }) {
   const pageNumbers = getPageNumbers(currentPage, pages);
 
   return (
-    <div className="bg-brand-gray min-h-screen">
+    <div className="bg-brand-gray min-h-screen md:flex">
       <FilterSidebar facets={facets} />
-      <main className="p-4">
+      <main className="p-4 flex-1">
         <ProductList products={items} />
-        <div className="mt-4 flex gap-2 items-center">
+        <div className="mt-4 flex gap-2 items-center justify-center">
           {pageNumbers.map((p, idx) =>
             p === '...' ? (
               <span key={idx}>...</span>
@@ -64,7 +64,7 @@ export default async function Page({ searchParams }) {
               <Link
                 key={idx}
                 href={`/products?page=${p}`}
-                className={`px-3 py-1 border rounded ${p === currentPage ? 'bg-gray-300' : ''}`}
+                className={`px-3 py-1 border-2 rounded ${p === currentPage ? 'bg-bovag-red text-white border-black' : 'bg-bovag-yellow border-black'}`}
               >
                 {p}
               </Link>
