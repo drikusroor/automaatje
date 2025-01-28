@@ -42,9 +42,7 @@ export default function Header() {
           </form>
         )}
 
-        <Link href="/wishlist">
-          <WishlistCounter />
-        </Link>
+        <WishlistCounter />
       </nav>
     </header>
   );
