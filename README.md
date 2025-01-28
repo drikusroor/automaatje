@@ -27,18 +27,6 @@ Is a Next.js-based prototype developed as a technical assessment for a 2nd inter
    ```
 4. Open [http://localhost:3000](http://localhost:3000) to view the app.
 
-## Project Structure
-
-- **app**: Contains pages built with Next.js App Router.  
-- **app/api**: Provides a simple products API featuring search, filtering, and sorting.  
-- **app/components**: Holds reusable UI components like the Header.  
-- **public**: Stores static files, including custom icons and images.  
-
-## Notes
-
-- This prototype is meant to showcase a possible approach and is not production-ready.
-- Additional customization or scaling may be required for real-world use cases.
-
 ## Acknowledgments
 
 - [Next.js](https://nextjs.org)
