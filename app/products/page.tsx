@@ -52,7 +52,8 @@ export default async function Page({ searchParams }) {
   const pageNumbers = getPageNumbers(currentPage, pages);
 
   return (
-    <div className="bg-brand-gray min-h-screen md:flex">
+    <div className="bg-brand-gray">
+      <div className="max-w-7xl min-h-screen md:flex">
       <FilterSidebar facets={facets} />
       <main className="p-4 flex-1">
         <ProductList products={items} />
@@ -72,6 +73,7 @@ export default async function Page({ searchParams }) {
           )}
         </div>
       </main>
+      </div>
     </div>
   );
 }
