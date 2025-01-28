@@ -12,7 +12,7 @@ export default async function WishlistPage() {
 
   return (
     <main className="pt-8 p-4 bg-brand-gray min-h-screen">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <h1 className="text-2xl font-bold mb-4">Mijn verlanglijst</h1>
         {wishlistItems.length === 0 ? (
           <p>Je hebt nog geen voertuigen op je verlanglijst.</p>

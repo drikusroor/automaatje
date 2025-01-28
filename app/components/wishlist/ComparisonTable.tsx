@@ -9,6 +9,7 @@ import { useState } from 'react';
 const ComparisonTable = ({ vehicles: initialVehicles }) => {
   const [vehicles, setVehicles] = useState(initialVehicles);
   
+  // TODO: Fetch vehicle facets from the API
   const facets = [
     { key: 'make', label: 'Merk' },
     { key: 'model', label: 'Model' },
@@ -37,7 +38,7 @@ const ComparisonTable = ({ vehicles: initialVehicles }) => {
             <tr>
               <th className="text-left p-3 border-b w-32">Kenmerken</th>
               {vehicles.map((vehicle) => (
-                <th key={vehicle.id} className="text-right p-3 border-b w-80">
+                <th key={vehicle.id} className="text-right p-3 border-b min-w-40">
                   <div className="flex justify-end items-center gap-2">
                     <Link href={`/products/${vehicle.id}`} className="text-bovag-red hover:underline">
                       {vehicle.make} {vehicle.model}
