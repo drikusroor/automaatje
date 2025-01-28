@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function FilterSidebar({ facets }: { facets: any[] }) {
