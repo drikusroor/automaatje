@@ -698,5 +698,19 @@
       "transmission": "Automaat",
       "condition": "Goed",
       "location": "Eindhoven"
+    },
+    {
+      "id": 51,
+      "make": "Fiat",
+      "model": "Panda",
+      "year": 2021,
+      "color": "Groen",
+      "price": 18000,
+      "mileage": 15000,
+      "type": "Hatchback",
+      "fuel": "Benzine",
+      "transmission": "Handgeschakeld",
+      "condition": "Goed",
+      "location": "Groningen"
     }
   ]
