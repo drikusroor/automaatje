@@ -9,7 +9,9 @@ export default function Header() {
           Automaatje 
           <span className="drop-shadow">🫰</span>
         </Link>
-        <WishlistCounter />
+        <Link href="/wishlist">
+          <WishlistCounter />
+        </Link>
       </nav>
     </header>
   );
