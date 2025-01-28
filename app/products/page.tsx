@@ -52,11 +52,9 @@ export default async function Page({ searchParams }) {
   const pageNumbers = getPageNumbers(currentPage, pages);
 
   return (
-    <div className="flex">
-      <aside className="w-1/4 p-4 hidden md:block bg-brand-gray">
-        <FilterSidebar facets={facets} />
-      </aside>
-      <main className="flex-1 p-4 bg-brand-gray min-h-screen">
+    <div className="bg-brand-gray min-h-screen">
+      <FilterSidebar facets={facets} />
+      <main className="p-4">
         <ProductList products={items} />
         <div className="mt-4 flex gap-2 items-center">
           {pageNumbers.map((p, idx) =>
